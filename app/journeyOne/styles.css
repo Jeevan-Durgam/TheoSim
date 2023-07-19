@@ -1,4 +1,13 @@
 body {
-  background-image: url("/bgjourneyone.jpg");
-  background-size: 100%;
+  background-image: linear-gradient(
+    to bottom right,
+    violet,
+    indigo,
+    blue,
+    green,
+    yellow,
+    orange,
+    red
+  );
+  background-repeat: no-repeat;
 }

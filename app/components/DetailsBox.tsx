@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 type Slide = {
@@ -9,69 +9,56 @@ type Slide = {
   para2: string;
   para3: string;
   para4: string;
+  img: string;
 };
 
-type Props = {};
+interface DetailsBoxProps {
+  slides: Slide[];
+}
 
-const slides: Slide[] = [
-  {
-    heading: "Heading1",
-    para1: "para1",
-    para2: "para2",
-    para3: "para3",
-    para4: "para4",
-  },
-  {
-    heading: "Heading2",
-    para1: "para1",
-    para2: "para2",
-    para3: "para3",
-    para4: "para4",
-  },
-  {
-    heading: "Heading3",
-    para1: "para1",
-    para2: "para2",
-    para3: "para3",
-    para4: "para4",
-  },
-  {
-    heading: "Heading4",
-    para1: "para1",
-    para2: "para2",
-    para3: "para3",
-    para4: "para4",
-  },
-];
-
-const DetailsBox: React.FC<Props> = () => {
+const DetailsBox: React.FC<DetailsBoxProps> = ({ slides }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const handleNextSlide = () => {
-    if (currentSlide === slides.length - 1) {
-      setCurrentSlide(0); // Start from the beginning
-    } else {
-      setCurrentSlide((prevSlide) => prevSlide + 1); // Go to the next slide
-    }
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
   };
 
   return (
-    <div className="p-4 md:p-10">
+    <div className="p-4 md:p-10 md:h-screen">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="w-full h-full flex flex-col gap-4 bg-transparent/40 text-black p-4 rounded-lg"
+        className="w-full h-full bg-transparent/40 text-black p-4 rounded-lg"
       >
-        <h1 className="text-xl font-semibold text-center">
-          {slides[currentSlide].heading}
-        </h1>
-        <p>{slides[currentSlide].para1}</p>
-        <p>{slides[currentSlide].para2}</p>
-        <p>{slides[currentSlide].para3}</p>
-        <p>{slides[currentSlide].para4}</p>
+        <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+          <div className="flex flex-col gap-4">
+            <h1 className="text-3xl font-bold text-center">
+              {slides[currentSlide].heading}
+            </h1>
+            <p className="text-xl text-white/70">
+              {slides[currentSlide].para1}
+            </p>
+            <p className="text-xl text-white/70">
+              {slides[currentSlide].para2}
+            </p>
+            <p className="text-xl text-white/70">
+              {slides[currentSlide].para3}
+            </p>
+            <p className="text-xl text-white/70">
+              {slides[currentSlide].para4}
+            </p>
+          </div>
+          <div className="max-w-7xl h-auto md:w-[1800px] md:h-[500px]">
+            <img
+              src={slides[currentSlide].img}
+              alt="image"
+              className="w-full h-full"
+            />
+          </div>
+        </div>
         <button
-          className="text-white p-4 font-semibold rounded-lg bg-transparent/40 self-end"
+          className="text-white p-4 font-semibold rounded-lg bg-transparent/40 mt-8"
           onClick={handleNextSlide}
         >
           Next
